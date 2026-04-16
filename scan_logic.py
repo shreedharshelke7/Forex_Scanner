@@ -54,7 +54,7 @@ def send_telegram(message: str):
 # ─────────────────────────────────────────────
 
 def fetch_candel(pair_sys, tf, Period):
-    df = yf.download(pair_sys, interval=tf, period=Period, auto_adjust=True) # type: ignore
+    df = yf.download(pair_sys, interval=tf, period=Period, auto_adjust=True)  # type: ignore
     if isinstance(df.columns, pd.MultiIndex):
         df.columns = df.columns.droplevel(1)  # ← ADD THIS
     today = datetime.now(pytz.utc).date()
