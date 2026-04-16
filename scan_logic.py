@@ -2,8 +2,6 @@
 import yfinance as yf
 import pandas as pd
 import requests
-import schedule
-import time
 from datetime import datetime
 import pytz
 
@@ -54,12 +52,12 @@ def send_telegram(message: str):
 # ─────────────────────────────────────────────
 
 def fetch_candel(pair_sys, tf, Period):
-    df = yf.download(pair_sys, interval=tf, period=Period, auto_adjust=True)  # type: ignore
+    df = yf.download(pair_sys, interval=tf, period=Period, auto_adjust=True) # type: ignore
     if isinstance(df.columns, pd.MultiIndex):
         df.columns = df.columns.droplevel(1)  # ← ADD THIS
-    today = datetime.now(pytz.utc).date()
-    df.index = pd.to_datetime(df.index)
-    df = df[df.index.date < today]
+    #today = datetime.now(pytz.utc).date()
+    #df.index = pd.to_datetime(df.index)
+    #df = df[df.index.date < today]
     return df
 
 # ─────────────────────────────────────────────
