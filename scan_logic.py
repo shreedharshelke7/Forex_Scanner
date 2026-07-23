@@ -15,13 +15,12 @@ load_dotenv()
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 TWELVE_DATA_API_KEY = os.getenv("Twelvedata_API_Key")
-print(TWELVE_DATA_API_KEY)
 client = twelvedata.TDClient(TWELVE_DATA_API_KEY)
 # ─────────────────────────────────────────────
 #  Pairs & Time frame 
 # ─────────────────────────────────────────────
 
-PAIRS = ["EURUSD","GBPUSD" ,"AUDUSD" ,"NZDUSD" ,"USDCAD" ,"USDJPY" ,"USDCHF" ,"XAUUSD"]
+PAIRS = ["EUR/USD","GBP/USD" ,"AUD/USD" ,"NZD/USD" ,"USD/CAD" ,"USD/JPY" ,"USD/CHF" ,"XAU/USD"]
 # ─────────────────────────────────────────────
 #  Fetch data from twelve data
 # ─────────────────────────────────────────────
@@ -38,6 +37,7 @@ def fetch_data(pair_sym,interval,period):
         df= df.sort_index()
         df= df[df.index.dayofweek < 5]
         df= df.astype(float)
+        print(df.head(4))
         return df
     return pd.DataFrame()
 
@@ -63,7 +63,7 @@ def scan(df):
 def process_create():
     shorlisted_pair={}
     for pair in PAIRS:
-        df=fetch_data(pair,"1day","5")
+        df=fetch_data(pair,"1day","60")
         sleep(20)
         result,msg=scan(df)
         if result:
@@ -71,7 +71,7 @@ def process_create():
     return shorlisted_pair
 
 def Bullish_2LQ_check(df):
-    candel_lows=df['low'].iloc[:-3]
+    candel_lows=df['low'].iloc[:-2]
     _2LQ_candel_low=df['low'].iloc[-2]
     list_low_not_taken=[]
     counter=0
@@ -99,7 +99,7 @@ def Bullish_2LQ_check(df):
         return False
 
 def Bearish_2LQ_check(df):
-    candel_highs=df['high'].iloc[:-3]
+    candel_highs=df['high'].iloc[:-2]
     _2LQ_candel_high=df['high'].iloc[-2]
     list_highs_not_taken=[]
     counter=0
