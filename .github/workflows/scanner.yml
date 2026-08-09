@@ -23,4 +23,4 @@ jobs:
         env:
           TWELVEDATA_API_KEY: ${{ secrets.TWELVEDATA_API_KEY }}
           MAKE_WEBHOOK_URL: ${{ secrets.MAKE_WEBHOOK_URL }}
-        run: python scanner.py
+        run: python scan_logic.py
