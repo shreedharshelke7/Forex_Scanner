@@ -37,7 +37,6 @@ def fetch_data(pair_sym,interval,period):
         df= df.sort_index()
         df= df[df.index.dayofweek < 5]
         df= df.astype(float)
-        print(df.head(4))
         return df
     return pd.DataFrame()
 

@@ -1,4 +1,4 @@
-name: Forex Scanner
+name: Forex_Scanner
 
 on:
   schedule:
@@ -20,4 +20,7 @@ jobs:
         run: pip install -r requirements.txt
         
       - name: Run scanner
-        run: python scan_logic.py
+        env:
+          TWELVEDATA_API_KEY: ${{ secrets.TWELVEDATA_API_KEY }}
+          MAKE_WEBHOOK_URL: ${{ secrets.MAKE_WEBHOOK_URL }}
+        run: python scanner.py
